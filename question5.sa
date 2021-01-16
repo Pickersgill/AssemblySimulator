@@ -1,0 +1,31 @@
+set a 10 // set value of a
+set b 40 // set value of b
+
+start:
+beq end a b
+
+set greater 1
+set counter 0
+
+\\ DECIDE IF A > B
+start2:
+beq a_label a counter
+beq b_label b counter
+
+add counter counter 1
+beq start2 1 1
+
+a_label:
+set greater 0
+b_label:
+
+\\ LOGIC STRUCTURE FOR GCD
+beq opt2 greater 0
+sub a a b
+beq end2 1 1
+opt2:
+sub b b a
+end2
+beq start 1 1
+end:
+
