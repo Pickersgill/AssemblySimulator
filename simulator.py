@@ -5,11 +5,13 @@ import numpy as np
 
 class Simulator:
 	
-	def __init__(self, ass):
+	def __init__(self, ass, slow=False):
 		self.MEM_START = 0
 		self.MEM_SIZE = 200
 		self.PC = 0
 		self.PROGRAMME_LEN = len(ass.lines)
+
+		self.slow = slow
 
 		self.var_table = {}
 		
@@ -28,6 +30,8 @@ class Simulator:
 
 	def run(self):
 		while(self.PC < self.PROGRAMME_LEN):
+			if self.slow:
+				input()
 			line = self.assembled.lines[self.PC]
 			print("RUNNING LINE AT PC: %d" %  self.PC)
 			print(line)
@@ -107,7 +111,10 @@ class Simulator:
 
 if __name__ == "__main__":
 	src = sys.argv[1]
+	slow = False
+	if len(sys.argv) > 2:
+		slow = sys.argv[2]
 	ass = Assembler(src)
-	sim = Simulator(ass)
+	sim = Simulator(ass, slow)
 
 
