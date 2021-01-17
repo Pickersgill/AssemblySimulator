@@ -42,27 +42,6 @@ class Assembler:
 		args = line[1:]
 		return Instruction([instruction] + args)
 
-	def replace_vars(self, var_list):
-		new_var_list = []
-	
-		for arg in var_list:
-			if not arg.isnumeric():
-				if arg not in self.var_table:
-					mem_loc = self.get_next_av_mem()
-					self.var_table[arg] = mem_loc
-					new_var_list.append(mem_loc)
-				else:
-					new_var_list.append(self.var_table[arg])
-			else:
-				new_var_list.append(int(arg))
-
-		return new_var_list
-
-	def get_next_av_mem(self):
-		if self.var_table.values():
-			return max(self.var_table.values()) + 1
-		else:
-			return self.VAR_MEM_START
 
 	def get_instr(self, instruction):
 		return INSTR_MAP[instruction[0]]
