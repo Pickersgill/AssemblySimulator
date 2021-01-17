@@ -1,16 +1,18 @@
 from assembler import Assembler
 import sys
 import numpy as np
+import argparse
 
 
 class Simulator:
 	
-	def __init__(self, ass, slow=False):
+	def __init__(self, ass, slow=False, verbose=False):
 		self.MEM_START = ass.MEM_START
 		self.MEM_SIZE = ass.MEM_SIZE
 		self.PC = 0
 		self.PROGRAMME_LEN = len(ass.lines)
 
+		self.verbose = verbose
 		self.slow = slow
 
 		self.var_table = ass.var_table
@@ -40,8 +42,9 @@ class Simulator:
 			if self.slow:
 				input()
 			line = self.assembled.lines[self.PC]
-			print("RUNNING LINE AT PC: %d" %  self.PC)
-			print(line)
+			if self.verbose:
+				print("RUNNING LINE AT PC: %d" %  self.PC)
+				print(line)
 			args = line.args
 			self.func_map[line.instruction_code](args)
 	
@@ -105,11 +108,18 @@ class Simulator:
 
 
 if __name__ == "__main__":
-	src = sys.argv[1]
-	slow = False
-	if len(sys.argv) > 2:
-		slow = bool(sys.argv[2])
+	parser = argparse.ArgumentParser()
+	parser.add_argument("source_file")
+	parser.add_argument("-v", "--verbose", help="run in verbose mode", action="store_true")
+	parser.add_argument("-s", "--slow", \
+		help="run in slow mode, enables step by step execution", action="store_true")
+	args = parser.parse_args()
+
+	src = args.source_file
+	slow = args.slow
+	verbose = args.verbose	
+
 	ass = Assembler(src)
-	sim = Simulator(ass, slow)
+	sim = Simulator(ass, slow, verbose)
 
 
