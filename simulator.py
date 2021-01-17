@@ -113,7 +113,7 @@ if __name__ == "__main__":
 	src = sys.argv[1]
 	slow = False
 	if len(sys.argv) > 2:
-		slow = sys.argv[2]
+		slow = bool(sys.argv[2])
 	ass = Assembler(src)
 	sim = Simulator(ass, slow)
 
