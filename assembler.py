@@ -22,9 +22,7 @@ class Instruction:
 class Assembler:
 	
 	def __init__(self, file_src):
-		self.VAR_MEM_START = 0
 		self.lines = []
-		self.var_table = {}
 		content = open(file_src)
 		
 		for line in content:
