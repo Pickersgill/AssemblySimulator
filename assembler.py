@@ -67,7 +67,10 @@ class Assembler:
 	
 
 	def get_instr(self, instruction):
-		return INSTR_MAP[instruction[0]]
+		instr = instruction[0]
+		if instr.isnumeric() and int(instr) in range(1, 7):
+			return int(instr)
+		return INSTR_MAP[instr]
 
 
 if __name__ == "__main__":
