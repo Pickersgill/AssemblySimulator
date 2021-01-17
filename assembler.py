@@ -22,9 +22,12 @@ class Instruction:
 class Assembler:
 	
 	def __init__(self, file_src):
-		self.VAR_MEM_START = 0
-		self.lines = []
+		self.MEM_START = 0
+		self.MEM_SIZE = 200
+
 		self.var_table = {}
+
+		self.lines = []
 		content = open(file_src)
 		
 		for line in content:
@@ -39,33 +42,35 @@ class Assembler:
 
 	def make_instruction(self, line):
 		instruction = self.get_instr(line)
-		args = line[1:]
+		args = self.assemble_args(line[1:])
 		return Instruction([instruction] + args)
 
-	def replace_vars(self, var_list):
-		new_var_list = []
-	
-		for arg in var_list:
+
+	def assemble_args(self, arg_list):
+		for i, arg in enumerate(arg_list):
 			if not arg.isnumeric():
-				if arg not in self.var_table:
-					mem_loc = self.get_next_av_mem()
-					self.var_table[arg] = mem_loc
-					new_var_list.append(mem_loc)
-				else:
-					new_var_list.append(self.var_table[arg])
+				arg_list[i] = self.get_var_mem_loc(arg_list[i])
 			else:
-				new_var_list.append(int(arg))
+				arg_list[i] = arg
 
-		return new_var_list
+		return arg_list
 
-	def get_next_av_mem(self):
-		if self.var_table.values():
-			return max(self.var_table.values()) + 1
+	def get_var_mem_loc(self, var_name):
+		if var_name in self.var_table.keys():
+			return self.var_table[var_name]
+		elif self.var_table.values():
+			self.var_table[var_name] = max(self.var_table.values()) + 1
 		else:
-			return self.VAR_MEM_START
+			self.var_table[var_name] = self.MEM_START
+
+		return self.get_var_mem_loc(var_name)
+	
 
 	def get_instr(self, instruction):
-		return INSTR_MAP[instruction[0]]
+		instr = instruction[0]
+		if instr.isnumeric() and int(instr) in range(1, 7):
+			return int(instr)
+		return INSTR_MAP[instr]
 
 
 if __name__ == "__main__":

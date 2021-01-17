@@ -1,3 +1,3 @@
-set a 10
-set b 1
-add c a b
+1 a 10
+1 b 1
+3 c a b
