@@ -51,7 +51,7 @@ class Assembler:
 			if not arg.isnumeric():
 				arg_list[i] = self.get_var_mem_loc(arg_list[i])
 			else:
-				arg_list[i] = arg
+				arg_list[i] = int(arg)
 
 		return arg_list
 

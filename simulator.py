@@ -27,6 +27,13 @@ class Simulator:
 
 		print("RUN COMPLETE, MEMORY CONTENT:")
 		print(self.memory)
+		if self.var_table.values():
+			print("VARIABLE CONTENT:")
+			for name in self.var_table:
+				addr = self.var_table[name]
+				print("%s: %d" % (name, self.mc(addr)))
+		else:
+			print("NO VARIABLES ASSIGNED")
 
 	def run(self):
 		while(self.PC < self.PROGRAMME_LEN):
