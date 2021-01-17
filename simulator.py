@@ -29,9 +29,10 @@ class Simulator:
 	def run(self):
 		while(self.PC < self.PROGRAMME_LEN):
 			line = self.assembled.lines[self.PC]
+			print("RUNNING LINE AT PC: %d" %  self.PC)
+			print(line)
 			args = line.args
 			self.func_map[line.instruction_code](args)
-			print(line)
 		
 
 	def get_var_mem_loc(self, var_name):
