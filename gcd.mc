@@ -1,16 +1,16 @@
-set a 2091 
-set b 2214
-set counter 0 
-set true 1 
-beq 15 a b 
-beq 9 counter b
-beq 12 counter a
-add counter counter true 
-beq 5 true true 
-sub a a b 
-set counter 0
-beq 2 true true 
-sub b b a 
-set counter 0
-beq 4 true true
-set complete 1
+1 100 2091
+1 101 2214
+1 103 0
+1 104 1
+2 15 100 101
+2 9 103 101
+2 12 103 100
+3 103 103 104
+2 5 104 104
+4 100 100 101
+1 103 0
+2 4 104 104
+4 101 101 100
+1 103 0
+2 4 104 104
+1 105 1
